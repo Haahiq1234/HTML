@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <title>OpenGL</title>
+</head>
+
+<body>
+    <script src="gl-matrix.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const mat4 = glMatrix.mat4;
+        var GL;
+        var vertexShaderText = [
+            "precision mediump float;",
+            "",
+            "attribute vec3 vert_Pos;",
+            "attribute vec3 vert_Col;",
+            "attribute vec2 vert_Uv;",
+            "",
+            "uniform mat4 mView;",
+            "uniform mat4 mProj;",
+            "uniform mat4 mWorld;",
+            "",
+            "varying vec3 frag_Col;",
+            "varying vec2 frag_Uv;",
+            "",
+            "void main() {",
+            "    frag_Col = vert_Col;",
+            "    frag_Uv = vert_Uv;//",
+            "    gl_Position = mProj * mView * mWorld * vec4(vert_Pos, 1.0);",
+            "}"
+        ].join("\n");
+        //console.log(vertexShaderText);
+
+        var fragmentShaderText = [
+            "precision mediump float;",
+            "",
+            "varying vec3 frag_Col;",
+            "varying vec2 frag_Uv;",
+            "uniform sampler2D sampler;",
+            "",
+            "void main() {",
+            "    //gl_FragColor = texture2D(sampler, frag_Uv);",
+            "    gl_FragColor = vec4(frag_Col, 1.0);",
+            "}"
+        ].join("\n");
+        //console.log(fragmentShaderText);
+
+        
+        let img = loadImage("res/crate.png", function(img) {
+            console.log(img);
+            //document.body.appendChild(img);
+        });
+        
+        
+        function onload() {
+            if (loading > 0) return;
+            let canvas = document.createElement("canvas");
+
+            document.body.appendChild(canvas);
+
+            canvas.width = 400;
+            canvas.height = 400;
+
+            
+            GL = canvas.getContext("webgl");
+
+            if (!GL) {
+                console.log("WebGL2 not found");
+                return;
+            }
+
+            
+
+            GL.enable(GL.CULL_FACE);
+            GL.enable(GL.DEPTH_TEST);
+            GL.cullFace(GL.BACK);
+            console.log(GL);
+
+            GL.clearColor(0.0, 0.0, 0.0, 1.0);
+            GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+
+            let program = createProgram(vertexShaderText, fragmentShaderText);
+
+            GL.useProgram(program);
+        
+
+            var indices = [];
+            let size = 1;
+            let verts = [
+                -size, size, -size,
+                 size, size, -size,
+                size, -size, -size,
+                -size, -size, -size,
+
+                 size, size, size,
+                -size, size, size,
+                -size, -size, size,
+                size, -size, size,
+
+                size, size, -size,
+                size, size, size,
+                size, -size, size,
+                size, -size, -size,
+
+                -size, size, size,
+                -size, size, -size,
+                -size, -size, -size,
+                -size, -size, size,
+                
+                size, size, -size,
+                -size, size, -size,
+                -size, size, size,
+                size, size, size,
+
+                -size, -size, -size,                
+                size, -size, -size,
+                size, -size, size,
+                -size, -size, size,
+            ];
+            let colors = [
+                1.0, .0, .0,
+                1.0, .0, .0,
+                1.0, .0, .0,
+                1.0, .0, .0,
+                
+                .0, 1.0, 1.0,
+                .0, 1.0, 1.0,
+                .0, 1.0, 1.0,
+                .0, 1.0, 1.0,
+
+                .0, .0, 1.0,
+                .0, .0, 1.0,
+                .0, .0, 1.0,
+                .0, .0, 1.0,
+                
+                1.0, 1.0, .0,
+                1.0, 1.0, .0,
+                1.0, 1.0, .0,
+                1.0, 1.0, .0,
+                
+                .0, 1.0, .0,
+                .0, 1.0, .0,
+                .0, 1.0, .0,
+                .0, 1.0, .0,
+
+                1.0, .0, 1.0,
+                1.0, .0, 1.0,
+                1.0, .0, 1.0,
+                1.0, .0, 1.0,
+            ];
+            
+            let length = colors.length / 12;
+            for (var i = 0; i < length; i++) {
+                indices.push(
+                    i * 4, i * 4 + 1, i * 4 + 2,
+                    i * 4, i * 4 + 2, i * 4 + 3
+                );
+            }
+
+            let ibo = createBuffer(GL.ELEMENT_ARRAY_BUFFER, indices);
+            
+            let vbo = GL.createBuffer();
+            let vert_Pos_AL = GL.getAttribLocation(program, "vert_Pos")
+            let pbo = createBuffer(GL.ARRAY_BUFFER, verts, GL.FLOAT, 3, [[vert_Pos_AL, 3]]);
+            let vert_Col_AL = GL.getAttribLocation(program, "vert_Col");
+            let cbo = createBuffer(GL.ARRAY_BUFFER, colors, GL.FLOAT, 3, [[vert_Col_AL, 3]]);
+
+            const camera = new Camera(canvas, program);   
+                    
+
+            //GL.drawArrays(GL.TRIANGLES, 0, 3);
+            let rot = 0;
+            setInterval(function () {                
+                GL.clear(GL.DEPTH_BUFFER_BIT | GL.COLOR_BUFFER_BIT);
+
+                camera.rotate(1, 0, 1.0);
+
+                GL.drawElements(GL.TRIANGLES, indices.length, GL.UNSIGNED_SHORT, 0);
+                //console.log("Hello");
+                rot += 0.1;
+            }, 1000 / 60)
+        }
+        onload();
+    </script>
+</body>
+
+</html>
