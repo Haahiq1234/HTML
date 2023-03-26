@@ -5,6 +5,6 @@ function loadFile(url, callback) {
       callback(xhr.responseText);
     }
   };
-  xhr.open('GET', "http://127.0.0.1:8080/" +  url, true);
+  xhr.open('GET', "res/" +  url, true);
   xhr.send();
 }

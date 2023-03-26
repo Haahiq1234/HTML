@@ -12,43 +12,15 @@
 <body>
     <script src="gl-matrix.js"></script>
     <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script src="utils.js"></script>
     <script>
         const mat4 = glMatrix.mat4;
         var GL;
-        var vertexShaderText = [
-            "precision mediump float;",
-            "",
-            "attribute vec3 vert_Pos;",
-            "attribute vec3 vert_Col;",
-            "attribute vec2 vert_Uv;",
-            "",
-            "uniform mat4 mView;",
-            "uniform mat4 mProj;",
-            "uniform mat4 mWorld;",
-            "",
-            "varying vec3 frag_Col;",
-            "varying vec2 frag_Uv;",
-            "",
-            "void main() {",
-            "    frag_Col = vert_Col;",
-            "    frag_Uv = vert_Uv;//",
-            "    gl_Position = mProj * mView * mWorld * vec4(vert_Pos, 1.0);",
-            "}"
-        ].join("\n");
+        var vertexShaderText;
         //console.log(vertexShaderText);
 
-        var fragmentShaderText = [
-            "precision mediump float;",
-            "",
-            "varying vec3 frag_Col;",
-            "varying vec2 frag_Uv;",
-            "uniform sampler2D sampler;",
-            "",
-            "void main() {",
-            "    //gl_FragColor = texture2D(sampler, frag_Uv);",
-            "    gl_FragColor = vec4(frag_Col, 1.0);",
-            "}"
-        ].join("\n");
+        var fragmentShaderText;
         //console.log(fragmentShaderText);
 
         
@@ -56,9 +28,14 @@
             console.log(img);
             //document.body.appendChild(img);
         });
+        asyncLoadFiles(["Shaders/shader.vs.glsl", "Shaders/shader.fs.glsl", "Shaders/filee.txt"], function(txts) {
+            vertexShaderText = txts[0];
+            fragmentShaderText = txts[1];
+            console.log(txts[2]);
+        });
         
         
-        function onload() {
+        function main() {
             if (loading > 0) return;
             let canvas = document.createElement("canvas");
 
@@ -90,78 +67,7 @@
             GL.useProgram(program);
         
 
-            var indices = [];
-            let size = 1;
-            let verts = [
-                -size, size, -size,
-                 size, size, -size,
-                size, -size, -size,
-                -size, -size, -size,
 
-                 size, size, size,
-                -size, size, size,
-                -size, -size, size,
-                size, -size, size,
-
-                size, size, -size,
-                size, size, size,
-                size, -size, size,
-                size, -size, -size,
-
-                -size, size, size,
-                -size, size, -size,
-                -size, -size, -size,
-                -size, -size, size,
-                
-                size, size, -size,
-                -size, size, -size,
-                -size, size, size,
-                size, size, size,
-
-                -size, -size, -size,                
-                size, -size, -size,
-                size, -size, size,
-                -size, -size, size,
-            ];
-            let colors = [
-                1.0, .0, .0,
-                1.0, .0, .0,
-                1.0, .0, .0,
-                1.0, .0, .0,
-                
-                .0, 1.0, 1.0,
-                .0, 1.0, 1.0,
-                .0, 1.0, 1.0,
-                .0, 1.0, 1.0,
-
-                .0, .0, 1.0,
-                .0, .0, 1.0,
-                .0, .0, 1.0,
-                .0, .0, 1.0,
-                
-                1.0, 1.0, .0,
-                1.0, 1.0, .0,
-                1.0, 1.0, .0,
-                1.0, 1.0, .0,
-                
-                .0, 1.0, .0,
-                .0, 1.0, .0,
-                .0, 1.0, .0,
-                .0, 1.0, .0,
-
-                1.0, .0, 1.0,
-                1.0, .0, 1.0,
-                1.0, .0, 1.0,
-                1.0, .0, 1.0,
-            ];
-            
-            let length = colors.length / 12;
-            for (var i = 0; i < length; i++) {
-                indices.push(
-                    i * 4, i * 4 + 1, i * 4 + 2,
-                    i * 4, i * 4 + 2, i * 4 + 3
-                );
-            }
 
             let ibo = createBuffer(GL.ELEMENT_ARRAY_BUFFER, indices);
             
@@ -186,7 +92,7 @@
                 rot += 0.1;
             }, 1000 / 60)
         }
-        onload();
+        Project.init(main);
     </script>
 </body>
 
