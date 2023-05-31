@@ -33,26 +33,26 @@ function asyncLoadFiles(files, callback) {
     var loadingTasks = files.length;
     var loadedResources = [];
     for (var i = 0; i < files.length; i++) {
-        loadFile(files[i], function(text, success, ival) {
+        loadFile(files[i], function(text, error, id) {
             //console.log(success);
-            loadedResources[ival[0]] = text;
+            loadedResources[id] = text;
             loadingTasks--;
             if (loadingTasks == 0) {
                 callback(loadedResources);
             }
-        }, [i]);
+        }, i);
         //console.log([i])
     }
 }
-function loadFile(filepath, callback, args = []) {
+function loadFile(filepath, callback, id) {
     let req = new XMLHttpRequest();
     Project.loading++;
     req.onload = function() {
         if (req.status == 200) {
-            callback(req.responseText, true, args);
+            callback(req.responseText, false, id);
         } else {
-            console.log("File of name " + filepath + " not found. Error:" + req.status);
-            callback("", false, args);
+            console.log("File of name " + filepath + " not found. Error status: " + req.status);
+            callback(null, true, id);
         }
         Project.loading--;
         Project.main();

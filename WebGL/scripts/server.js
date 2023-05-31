@@ -15,7 +15,6 @@ app.get("/", function(req, res) {
 app.get("/res/*", function(req, res) {
     res.setHeader("status", 200);
     res.end(fs.readFileSync(req.url.replace("/", "")));
-
 })
 app.get("*.js", function(req, res) {
     res.setHeader("status", 200);
@@ -27,5 +26,5 @@ app.get("/style.css", function(req, res) {
 });
 
 server.listen(3000, function() {
-    console.log("listening on port 3000")
+    console.log("listening on port 3000");
 });
