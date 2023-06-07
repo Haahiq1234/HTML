@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+.outline-1 {
+    color: red;
+    position: absolute;
+    top:20px;
+    left:20px;
+    width: 400px;
+    height: 400px;
+    border: 2px black solid;
+    background-color: rgb(100, 100, 100);
+}
