@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id="signinscreen">
+        <div class="signincontainer">
+            <div class="signininnercontainer">
+                <input type="text" id="signinusername" name="signinusername" placeholder="Enter Username"
+                    class="si_username_field" /><br>
+                <input type="password" id="signinpassword" name="signinpassword" placeholder="Enter Password"
+                    class="si_password_field" /><br>
+                <button id="signinbutton" class="si_signin_button but">SIGN IN</button>
+                <button id="si_signupbutton" class="si_signup_button but">SIGN UP</button>
+            </div>
+        </div>
+    </div>
+    <div id="signupscreen">
+        <div class="signupcontainer">
+            <div class="signupinnercontainer">
+                <input type="text" id="signupusername" placeholder="Create Username" class="su_username_field" /><br>
+                <input type="password" id="signuppassword" placeholder="Create Password"
+                    class="su_password_field" /><br>
+                <button id="signupbutton" class="su_register_button but">REGISTER</button>
+                <button id="signupbackbutton" class="su_back_button but">BACK</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="header_container" class="header_container">
+        <div id="header_menu_opener" class="header_menu_opener">
+            <img id="menu_opener_image" class="menu_opener_image" src="menu.png">
+        </div>
+    </div>
+    <div class="menu_container" id="menu_container">
+        <ul class="menu_options_ul">
+            <li id="menu_first_option" class="menu_first_option">Sign Out</li>
+            <li id="menu_sign_out">SIGN OUT</li>
+        </ul>
+    </div>
+    <div class="contacts_container" id="contacts_container">
+        <ul class="contacts_ul">
+            <li><a>shit</a></li>
+            <li><a>shat</a></li>
+            <li><a>shoot</a></li>
+            <li><a>shut</a></li>
+            <li><a>shut</a></li>
+        </ul>
+    </div>
+
+    <div id="texter_screen">
+        <div class="texter_messages_container"></div>
+    </div>
+
+    <script src="Account.js"></script>
+    <script src="texter.js"></script>
+    <script src="contacts.js"></script>
+    <script src="header.js"></script>
+    <script src="menu.js"></script>
+    <script src="sign_in.js"></script>
+    <script src="sign_up.js"></script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

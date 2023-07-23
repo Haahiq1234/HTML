@@ -1,0 +1,8 @@
+.head {
+    width: 80%;
+    height: 80px;
+    position: absolute;
+    left: 20%;
+    top: 0;
+    background-color: lightgray;
+}
