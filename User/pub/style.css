@@ -1,0 +1,236 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    user-select: none;
+}
+
+:root {
+    --field_width: min(300px, 80%);
+    --field_height: min(30px, 20%);
+    --field_left: calc((100% - var(--field_width)) / 2);
+    --but_width: min(100px, 45%);
+    --but_left: calc((100% - var(--but_width) * 2 - 10px) / 2);
+
+
+    --header_height: min(200px, 10%);
+    --contacts_container_width: 400px;
+}
+
+body {
+    background: rgb(230, 230, 230);
+}
+
+.signincontainer,
+.signupcontainer {
+    width: min(400px, 100%);
+    height: 70%;
+    background: rgb(200, 200, 200);
+    position: absolute;
+    top: 15%;
+    left: calc((100% - min(400px, 100%)) / 2);
+    border-radius: 5px;
+}
+
+.signininnercontainer,
+.signupinnercontainer {
+    background: rgb(190, 190, 190);
+    width: 80%;
+    height: 80%;
+    position: relative;
+    top: 10%;
+    left: 10%;
+    border-radius: 5px;
+}
+
+.su_username_field,
+.si_username_field,
+.su_password_field,
+.si_password_field {
+    position: absolute;
+    width: var(--field_width);
+    height: var(--field_height);
+    left: var(--field_left);
+    padding: 0 0 0 min(20px, 10%);
+}
+
+.su_username_field,
+.si_username_field {
+    top: min(calc(10% + 20px), 20%);
+}
+
+.su_password_field,
+.si_password_field {
+    top: min(calc(10% + 50px + var(--field_height)), 40%);
+}
+
+.but {
+    position: absolute;
+    width: var(--but_width);
+    height: min(30px, 10%);
+    top: min(calc(10% + 100px + var(--field_height) * 2), 60%);
+    border: 0px;
+}
+
+.but:hover {
+    border: 0px;
+    background-color: rgb(160, 160, 160);
+}
+
+.su_register_button,
+.si_signin_button {
+    left: calc(var(--but_left));
+}
+
+.su_back_button,
+.si_signup_button {
+    left: calc(var(--but_left) + var(--but_width) + 10px);
+}
+
+.header_container {
+    width: 100%;
+    background-color: rgb(180, 180, 180);
+    height: var(--header_height);
+    position: absolute;
+    /* display: none; */
+}
+
+.texter_heading {
+    line-height: 60px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+}
+
+.contacts_container {
+    width: min(400px, 100%);
+    left: calc((100% - min(400px, 100%)) / 2);
+    position: absolute;
+    top: 0;
+    height: 100%;
+    overflow-y: auto;
+}
+
+ul.contacts_ul {
+    width: 100%;
+    list-style-type: none;
+    background-color: rgb(160, 160, 160);
+    min-height: 100%;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    margin: auto;
+}
+
+ul.contacts_ul li a {
+    display: block;
+    color: #000;
+    background-color: rgb(140, 140, 140);
+    padding: 0px 16px;
+    line-height: 40px;
+    height: 40px;
+    margin: 0 20px 10px 20px;
+    text-decoration: none;
+    user-select: none;
+}
+
+/* Change the link color on hover */
+ul.contacts_ul li a:hover {
+    background-color: rgb(110, 110, 110);
+    color: white;
+}
+
+.header_menu_opener {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgb(160, 160, 160);
+    z-index: 25;
+}
+
+.header_menu_opener:hover {
+    background-color: rgb(120, 120, 120);
+}
+
+.menu_opener_image {
+    --padding: 5%;
+    position: absolute;
+    left: var(--padding);
+    top: var(--padding);
+    width: calc(100% - var(--padding) * 2);
+    height: calc(100% - var(--padding) * 2);
+}
+
+
+.menu_container {
+    position: absolute;
+    background-color: rgb(190, 190, 190);
+    width: min(100%, 200px);
+    height: auto;
+    right: 0;
+    top: 0;
+    /* padding-right: 10px; */
+    z-index: 100;
+
+}
+
+ul.menu_options_ul {
+    width: min(400px, 100%);
+    list-style-type: none;
+    background-color: white;
+    height: auto;
+    /* padding: 10px; */
+    margin: auto;
+}
+
+ul.menu_options_ul li {
+    display: block;
+    background-color: white;
+    text-decoration: none;
+    user-select: none;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+/* Change the link color on hover */
+ul.menu_options_ul li:hover:not(.menu_first_option) {
+    background-color: rgb(220, 220, 220);
+}
+
+ul.menu_options_ul .menu_first_option {
+    border-bottom: rgb(200, 200, 200) solid 1px;
+    /* background-color: #04AA6D; */
+}
+
+.menu_background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    visibility: none;
+}
+
+.background {
+    z-index: 100;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(230, 230, 230);
+}
+
+.main_container {
+    position: absolute;
+    top: var(--header_height);
+    width: 100%;
+    height: calc(100% - var(--header_height));
+}
+
+/* ul.menu_options_ul:first-child:hover {
+    color: rgb(200, 200, 200);
+} */

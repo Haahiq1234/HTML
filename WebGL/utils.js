@@ -1,13 +1,13 @@
 const Project = {
     loading: 0,
     main: undefined,
-    init: function(func) {
-        this.main = function() {
+    init: function (func) {
+        this.main = function () {
             if (this.loading > 0) return;
             func();
-        } 
+        }
         this.main();
-    }    
+    }
 }
 
 
@@ -22,7 +22,7 @@ function loadImage(src, callback, width, height) {
         image.height = height;
     }
     image.src = src;
-    image.onload = function() {
+    image.onload = function () {
         callback(image);
         Project.loading--;
         Project.main();
@@ -33,7 +33,7 @@ function asyncLoadFiles(files, callback) {
     var loadingTasks = files.length;
     var loadedResources = [];
     for (var i = 0; i < files.length; i++) {
-        loadFile(files[i], function(text, error, id) {
+        loadFile(files[i], function (text, error, id) {
             //console.log(success);
             loadedResources[id] = text;
             loadingTasks--;
@@ -47,7 +47,7 @@ function asyncLoadFiles(files, callback) {
 function loadFile(filepath, callback, id) {
     let req = new XMLHttpRequest();
     Project.loading++;
-    req.onload = function() {
+    req.onload = function () {
         if (req.status == 200) {
             callback(req.responseText, false, id);
         } else {
