@@ -1,6 +1,6 @@
 @echo off
 
 pushd
-node "scripts/server.js"
+node "server.js"
 popd
 pause
